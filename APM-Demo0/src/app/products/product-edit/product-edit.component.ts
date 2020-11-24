@@ -119,16 +119,20 @@ export class ProductEditComponent implements OnInit, OnChanges {
     }
   }
 
-  cancelEdit(product: Product): void {
+  cancelEdit(): void {
     // Redisplay the currently selected product
     // replacing any edits made
-    this.displayProduct(product);
+    this.displayProduct(this.selectedProduct);
   }
 
-  deleteProduct(product: Product): void {
-    if (product && product.id) {
-      if (confirm(`Really delete the product: ${product.productName}?`)) {
-        this.delete.emit(product);
+  deleteProduct(): void {
+    if (this.selectedProduct && this.selectedProduct.id) {
+      if (
+        confirm(
+          `Really delete the product: ${this.selectedProduct.productName}?`
+        )
+      ) {
+        this.delete.emit(this.selectedProduct);
       }
     } else {
       // No need to delete, it was never saved
@@ -136,13 +140,13 @@ export class ProductEditComponent implements OnInit, OnChanges {
     }
   }
 
-  saveProduct(originalProduct: Product): void {
+  saveProduct(): void {
     if (this.productForm.valid) {
       if (this.productForm.dirty) {
         // Copy over all of the original product properties
         // Then copy over the values from the form
         // This ensures values not on the form, such as the Id, are retained
-        const product = { ...originalProduct, ...this.productForm.value };
+        const product = { ...this.selectedProduct, ...this.productForm.value };
 
         if (product.id === 0) {
           this.create.emit(product);
