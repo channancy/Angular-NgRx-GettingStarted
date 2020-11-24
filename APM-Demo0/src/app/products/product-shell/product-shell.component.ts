@@ -43,4 +43,22 @@ export class ProductShellComponent implements OnInit {
       ProductPageActions.setCurrentProduct({ currentProductId: product.id })
     );
   }
+
+  deleteProduct(product: Product): void {
+    this.store.dispatch(
+      ProductPageActions.deleteProduct({ productId: product.id })
+    );
+  }
+
+  clearProduct(): void {
+    this.store.dispatch(ProductPageActions.clearCurrentProduct());
+  }
+
+  saveProduct(product: Product): void {
+    this.store.dispatch(ProductPageActions.createProduct({ product }));
+  }
+
+  updateProduct(product: Product): void {
+    this.store.dispatch(ProductPageActions.updateProduct({ product }));
+  }
 }
